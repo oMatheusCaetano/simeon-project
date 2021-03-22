@@ -1,13 +1,11 @@
 <template>
-  <Title title="Hello World Page Home Here" />
+<div></div>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
 
 export default {
   components: {
-    Title: defineAsyncComponent(() => import('@component/text/Title')),
   },
 }
 </script>

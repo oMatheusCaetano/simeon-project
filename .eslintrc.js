@@ -12,6 +12,7 @@ module.exports = {
   ],
   rules: {
     semi: ['error', 'never'],
+    'no-param-reassign': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
