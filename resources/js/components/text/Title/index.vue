@@ -13,7 +13,4 @@ export default {
 <style lang="scss" scoped>
 @import '@styleVariables';
 
-h2 {
-  color: $orange;
-}
 </style>
