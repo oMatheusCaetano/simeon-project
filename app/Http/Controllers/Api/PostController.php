@@ -23,6 +23,6 @@ class PostController extends Controller
 
   public function store(PostRequest $request): JsonResponse
   {
-    return response()->json($this->repository->create($request->all()));
+    return response()->json($this->repository->create($request->all()), 201);
   }
 }

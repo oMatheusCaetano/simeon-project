@@ -18,6 +18,6 @@ class UserController extends Controller
 
   public function store(UserRequest $request): JsonResponse
   {
-    return response()->json($this->repository->create($request->all()));
+    return response()->json($this->repository->create($request->all()), 201);
   }
 }

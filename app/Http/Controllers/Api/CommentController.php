@@ -18,6 +18,6 @@ class CommentController extends Controller
 
   public function store(CommentRequest $request): JsonResponse
   {
-    return response()->json($this->repository->create($request->all()));
+    return response()->json($this->repository->create($request->all()), 201);
   }
 }
