@@ -2,20 +2,17 @@
 
 namespace App\Providers;
 
+use App\Http\Repositories\Implementations\PostRepositoryImpl;
+use App\Http\Repositories\PostRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
+        $this->app->singleton(PostRepository::class, fn() => new PostRepositoryImpl());
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
     }
