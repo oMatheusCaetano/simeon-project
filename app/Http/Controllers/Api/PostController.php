@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use App\Http\Requests\PostRequest;
+use App\Http\Repositories\Implementations\PostRepositoryImpl;
 
 class PostController extends Controller
 {
   public function index()
   {
-    return response()->json(Post::paginate());
+    $postRespotiroy = new PostRepositoryImpl();
+    return response()->json($postRespotiroy->getAllPaginated());
   }
 
   public function store(PostRequest $request)
   {
-    return response()->json(Post::create($request->all()));
+    $postRespotiroy = new PostRepositoryImpl();
+    return response()->json($postRespotiroy->create($request->all()));
   }
 }
