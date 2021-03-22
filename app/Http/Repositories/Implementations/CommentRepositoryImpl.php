@@ -2,14 +2,14 @@
 
 namespace App\Http\Repositories\Implementations;
 
-use App\Http\Repositories\UserRepository;
-use App\Models\User;
+use App\Http\Repositories\CommentRepository;
+use App\Models\Comment;
 
-class CommentRepositoryImpl implements UserRepository
+class CommentRepositoryImpl implements CommentRepository
 {
 
   public function create(array $data): object
   {
-    return User::create($data);
+    return Comment::create($data);
   }
 }
