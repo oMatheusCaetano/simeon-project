@@ -2,8 +2,9 @@
 
 namespace App\Http\Repositories;
 
-interface PostRepository
+use App\Http\Repositories\CrudRepository;
+
+interface PostRepository extends CrudRepository 
 {
     public function getAllPaginated(): array;
-    public function create(array $data): object;
 }
