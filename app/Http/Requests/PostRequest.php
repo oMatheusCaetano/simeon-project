@@ -20,12 +20,12 @@ class PostRequest extends FormRequest
         
     }
 
-    // public function messages(): array
-    // {
-    //     return [
-    //         'required' => 'O :attribute é obrigatório.',
-    //         'title.required' => 'O título é obrigatório.',
-    //         'description.required' => 'A descrição é obrigatória.',
-    //     ];
-    // }
+    public function messages(): array
+    {
+        return [
+            'required' => 'O :attribute é obrigatório.',
+            'title.required' => 'O título é obrigatório.',
+            'description.required' => 'A descrição é obrigatória.',
+        ];
+    }
 }
