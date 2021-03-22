@@ -6,25 +6,26 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PostRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required',
             'description' => 'required',
         ];
+        
     }
 
-    public function messages(): array
-    {
-        return [
-            'required' => 'O :attribute é obrigatório.',
-            'title.required' => 'O título é obrigatório.',
-            'description.required' => 'A descrição é obrigatória.',
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'required' => 'O :attribute é obrigatório.',
+    //         'title.required' => 'O título é obrigatório.',
+    //         'description.required' => 'A descrição é obrigatória.',
+    //     ];
+    // }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Repositories\PostRepository;
+use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
@@ -15,12 +16,12 @@ class PostController extends Controller
     $this->repository = $postRepository;
   }
 
-  public function index()
+  public function index(): JsonResponse
   {
     return response()->json($this->repository->getAllPaginated());
   }
 
-  public function store(PostRequest $request)
+  public function store(PostRequest $request): JsonResponse
   {
     return response()->json($this->repository->create($request->all()));
   }
