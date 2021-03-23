@@ -4,7 +4,7 @@
       <div></div>
       <div>
         <router-link to="/post"><span>Novo Post</span></router-link>
-        <span>Logout</span>
+        <span @click="logout">Logout</span>
       </div>
     </nav>
 
@@ -14,7 +14,12 @@
 <script>
 
 export default {
-
+  methods: {
+    async logout() {
+      const result = await this.$store.dispatch('auth/logout', this.formData)
+      if (result) this.$router.push({ name: 'Login' })
+    },
+  },
 }
 </script>
 

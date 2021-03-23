@@ -1,15 +1,12 @@
 import Vuex from 'vuex'
 
 import auth from './modules/auth'
+import post from './modules/post'
 
 export default new Vuex.Store({
-  modules: {
-    auth,
-  },
+  modules: { auth, post },
 
-  state: {
-    isLoading: false,
-  },
+  state: { isLoading: false },
 
   getters: {
     getIsLoading: ({ isLoading }) => isLoading,

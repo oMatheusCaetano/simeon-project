@@ -48,7 +48,7 @@ export default {
   },
 
   methods: {
-    async regiloginster() {
+    async login() {
       const result = this.$store.dispatch('auth/login', this.formData)
       if (result) this.$router.push({ name: 'Home' })
     },

@@ -4,7 +4,7 @@
       <div></div>
       <div>
         <router-link to="/"><span>Posts</span></router-link>
-        <span>Logout</span>
+        <span @click="logout">Logout</span>
       </div>
     </nav>
 
@@ -46,15 +46,20 @@ export default {
 
   computed: {
     ...mapGetters({
-      errors: 'auth/getErrors',
+      errors: 'post/getErrors',
       loading: 'getIsLoading',
     }),
   },
 
   methods: {
     async createPost() {
-      const result = this.$store.dispatch('post/create', this.formData)
+      const result = await this.$store.dispatch('post/create', this.formData)
       if (result) this.$router.push({ name: 'Home' })
+    },
+
+    async logout() {
+      const result = await this.$store.dispatch('auth/logout', this.formData)
+      if (result) this.$router.push({ name: 'Login' })
     },
   },
 
