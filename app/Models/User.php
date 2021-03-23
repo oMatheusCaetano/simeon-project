@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -22,5 +24,25 @@ class User extends Authenticatable
     public function comments(): HasMany
     {
         return $this->hasMany(Comments::class);
+    }
+
+    public function setEmailAttribute(string $email): void
+    {
+        $this->attributes['email'] = strtolower($email);
+    }
+
+    public function setPasswordAttribute(string $password): void
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        return [];
     }
 }
