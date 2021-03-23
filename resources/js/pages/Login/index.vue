@@ -3,6 +3,7 @@
     <div class="form-wrapper">
       <form @submit.prevent="login">
         <h2>Entrar</h2>
+        <p class="error-message">{{ error }}</p>
         <Input
           label="E-mail"
           id="email"
@@ -43,14 +44,15 @@ export default {
   computed: {
     ...mapGetters({
       errors: 'auth/getErrors',
+      error: 'auth/getError',
       loading: 'getIsLoading',
     }),
   },
 
   methods: {
     async login() {
-      const result = this.$store.dispatch('auth/login', this.formData)
-      if (result) this.$router.push({ name: 'Home' })
+      const result = await this.$store.dispatch('auth/login', this.formData)
+      if (result) window.location.replace('/')
     },
   },
 
@@ -89,6 +91,12 @@ export default {
       h2 {
         color: $title;
         margin-bottom: 15px;
+      }
+
+      .error-message {
+        color: $error;
+        margin: 15px 0;
+        font-weight: 600;
       }
 
       .input-component {

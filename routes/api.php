@@ -10,7 +10,6 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/auth/refresh', [AuthController::class, 'refresh']);
 Route::get('/auth/logout', [AuthController::class, 'logout']);
 
-
 Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/posts', [PostController::class, 'index']);

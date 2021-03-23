@@ -64,8 +64,8 @@ export default {
 
   methods: {
     async register() {
-      const result = this.$store.dispatch('auth/register', this.formData)
-      if (result) this.$router.push({ name: 'Home' })
+      const result = await this.$store.dispatch('auth/register', this.formData)
+      if (result) this.$router.push({ name: 'Login' })
     },
   },
 

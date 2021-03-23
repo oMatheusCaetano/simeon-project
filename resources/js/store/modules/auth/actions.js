@@ -1,20 +1,21 @@
-import api from '@/services/api'
+import api, { headers } from '@/services/api'
 
 export default {
   async register({ commit }, formData) {
     commit('resetErrors')
+    commit('resetError')
 
     try {
       commit('setIsLoading', true, { root: true })
-      const data = await api.post('auth/register', formData)
+      await api.post('users', formData)
       commit('setIsLoading', false, { root: true })
-      // eslint-disable-next-line no-console
-      console.log(`data ${data}`)
       return true
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`error ${err}`)
-      commit('setErrors', err.response.data)
+    } catch ({ response }) {
+      if (response.status === 401) {
+        commit('setError', response.data.error)
+      } else {
+        commit('setErrors', response.data.errors)
+      }
       commit('setIsLoading', false, { root: true })
       return false
     }
@@ -22,37 +23,36 @@ export default {
 
   async login({ commit }, formData) {
     commit('resetErrors')
+    commit('resetError')
 
     try {
       commit('setIsLoading', true, { root: true })
       const data = await api.post('auth/login', formData)
+      localStorage.setItem('api_token', data.data.token)
       commit('setIsLoading', false, { root: true })
-      // eslint-disable-next-line no-console
-      console.log(`data ${data}`)
       return true
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`error ${err}`)
-      commit('setErrors', err.response.data)
+    } catch ({ response }) {
+      if (response.status === 401) {
+        commit('setError', response.data.error)
+      } else {
+        commit('setErrors', response.data.errors)
+      }
       commit('setIsLoading', false, { root: true })
       return false
     }
   },
 
-  async logout({ commit }, formData) {
+  async logout({ commit }) {
     commit('resetErrors')
+    commit('resetError')
 
     try {
       commit('setIsLoading', true, { root: true })
-      const data = await api.post('auth/logout', formData)
+      await api.get('auth/logout', headers)
+      localStorage.removeItem('api_token')
       commit('setIsLoading', false, { root: true })
-      // eslint-disable-next-line no-console
-      console.log(`data ${data}`)
       return true
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`error ${err}`)
-      commit('setErrors', err.response.data)
+    } catch ({ response }) {
       commit('setIsLoading', false, { root: true })
       return false
     }
