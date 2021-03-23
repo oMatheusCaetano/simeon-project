@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Repositories\PostRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -17,13 +19,15 @@ class PostController extends Controller
     $this->repository = $postRepository;
   }
 
-  public function index(): JsonResponse
+  public function index(Request $request): JsonResponse
   {
     return response()->json($this->repository->getAllPaginated());
   }
 
   public function store(PostRequest $request): JsonResponse
   {
-    return response()->json($this->repository->create($request->all()), 201);
+    $data = $request->all();
+    $data['user_id'] = Auth::user()->id;
+    return response()->json($this->repository->create($data), 201);
   }
 }

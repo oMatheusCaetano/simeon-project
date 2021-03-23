@@ -9,30 +9,39 @@
     </nav>
 
     <main>
-      <ul>
-        <li>
+      <p class="no-posts" v-if="posts.data?.length === 0">Nenhum post cadastrado</p>
+      <ul v-else>
+        <li v-for="(post, index) in posts.data" :key="index">
           <div class="post">
-            <h3>Titulo do post</h3>
-            <p>Descrição do post</p>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.description }}</p>
           </div>
 
-          <div class="post-comment">
-            <Input label="Comentar" textarea />
-            <Button text="Salvar" />
-          </div>
+          <form class="post-comment" @submit.prevent="createComment(post.id)">
 
-          <div>
-            <div class="post-comments">
-              <h5>Matheus Caetano</h5>
-              <p>Algum commentatio</p>
-            </div>
-            <div class="post-comments">
-              <h5>Matheus Caetano</h5>
-              <p>Algum commentatio</p>
+            <Input
+              label="Comentar"
+              textarea
+              v-model="formData[post.id]"
+              :errorMessage="errors[post.id] ?? ''"
+            />
+            <Button text="Salvar" :loading="loading" />
+          </form>
+
+          <div class="comments-wrapper">
+            <div class="post-comments" v-for="(comment, index) in post.comments" :key="index">
+              <h5>{{ comment.name }}</h5>
+              <p>{{ comment.description }}</p>
             </div>
           </div>
         </li>
       </ul>
+
+      <div class="paginator">
+        <Button text="Anterior" :loading="loading" @click="previousPage" />
+        <p>{{ posts.current_page }}</p>
+        <Button text="Próximo" :loading="loading" @click="nextPage" />
+      </div>
     </main>
 
   </div>
@@ -40,13 +49,52 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+import { mapGetters } from 'vuex'
 
 export default {
+  data: () => ({
+    formData: [],
+  }),
+
+  computed: {
+    ...mapGetters({
+      errors: 'comment/getErrors',
+      posts: 'post/getPosts',
+      loading: 'getIsLoading',
+    }),
+  },
+
   methods: {
     async logout() {
       const result = await this.$store.dispatch('auth/logout', this.formData)
       if (result) this.$router.push({ name: 'Login' })
     },
+
+    nextPage() {
+      if (this.posts.current_page >= this.posts.last_page) return
+      this.$store.dispatch('post/all', { page: this.posts.current_page + 1 })
+    },
+
+    previousPage() {
+      if (this.posts.current_page <= 1) return
+      this.$store.dispatch('post/all', { page: this.posts.current_page - 1 })
+    },
+
+    async createComment(postId) {
+      const form = {
+        post_id: postId,
+        description: this.formData[postId],
+      }
+      const result = await this.$store.dispatch('comment/create', form)
+      if (result) {
+        await this.$store.dispatch('post/all', { page: this.posts.current_page })
+        this.formData[postId] = ''
+      }
+    },
+  },
+
+  async created() {
+    await this.$store.dispatch('post/all')
   },
 
   components: {
@@ -77,9 +125,15 @@ export default {
   }
 
   main {
-    padding: 100px 40px 50px;
+    padding: 40px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .no-posts {
+      margin-top: 100px;
+      color: $text-in-primary;
+    }
 
     ul {
       list-style: none;
@@ -90,6 +144,7 @@ export default {
         background: $text-in-primary;
         border-radius: $border-radius;
         padding: 10px;
+        margin-bottom: 15px;
 
         h3, h5 {
           color: $title;
@@ -119,14 +174,33 @@ export default {
           }
         }
 
-        .post-comments {
-          padding: 10px 20px;
+        .comments-wrapper {
+          overflow: auto;
+          max-height: 300px;
 
-          p {
-            font-size: 14px;
+          .post-comments {
+            padding: 10px 20px;
+
+            p {
+              font-size: 14px;
+            }
           }
         }
       }
+    }
+  }
+
+  .paginator {
+    display: flex;
+    margin-top: 20px;
+
+    p {
+      color: $text-in-primary;
+      margin-top: 15px;
+    }
+
+    .button-component {
+      margin: 0px 20px 40px;
     }
   }
 }

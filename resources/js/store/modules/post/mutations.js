@@ -3,4 +3,5 @@ export default {
   resetErrors: (state) => { state.errors = {} },
   setError: (state, data) => { state.error = data },
   resetError: (state) => { state.error = '' },
+  setPosts: (state, data) => { state.posts = data },
 }

@@ -1,20 +1,34 @@
-import api from '@/services/api'
+import api, { headers } from '@/services/api'
 
 export default {
-  async createPost({ commit }, formData) {
+  async all({ commit }, payload) {
     commit('resetErrors')
+    commit('resetError')
+    const page = (payload && payload.page) || 1
+    try {
+      commit('setIsLoading', true, { root: true })
+      const { data } = await api.get(`posts?page=${page}`, headers)
+      commit('setIsLoading', false, { root: true })
+      commit('setPosts', data)
+      return true
+    } catch ({ response }) {
+      commit('setErrors', response.data.errors)
+      commit('setIsLoading', false, { root: true })
+      return false
+    }
+  },
+
+  async create({ commit }, formData) {
+    commit('resetErrors')
+    commit('resetError')
 
     try {
       commit('setIsLoading', true, { root: true })
-      const data = await api.post('posts', formData)
+      await api.post('posts', formData, headers)
       commit('setIsLoading', false, { root: true })
-      // eslint-disable-next-line no-console
-      console.log(`data ${data}`)
       return true
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`error ${err}`)
-      commit('setErrors', err.response.data)
+    } catch ({ response }) {
+      commit('setErrors', response.data.errors)
       commit('setIsLoading', false, { root: true })
       return false
     }
