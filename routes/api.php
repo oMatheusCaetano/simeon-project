@@ -13,6 +13,7 @@ Route::get('/auth/logout', [AuthController::class, 'logout']);
 Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/lastCommented', [PostController::class, 'lastCommented']);
 Route::post('/posts', [PostController::class, 'store']);
 
 Route::post('/comments', [CommentController::class, 'store']);

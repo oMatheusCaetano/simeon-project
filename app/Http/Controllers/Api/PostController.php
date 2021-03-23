@@ -19,9 +19,14 @@ class PostController extends Controller
     $this->repository = $postRepository;
   }
 
-  public function index(Request $request): JsonResponse
+  public function index(): JsonResponse
   {
     return response()->json($this->repository->getAllPaginated());
+  }
+
+  public function lastCommented()
+  {
+    return response()->json($this->repository->findLastCommented(Auth::user()->id));
   }
 
   public function store(PostRequest $request): JsonResponse

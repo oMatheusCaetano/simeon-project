@@ -4,7 +4,9 @@ import actions from './actions'
 
 export default {
   namespaced: true,
-  state: { errors: {}, error: '', posts: [] },
+  state: {
+    errors: {}, error: '', posts: [], lastCommented: {},
+  },
   mutations,
   getters,
   actions,
