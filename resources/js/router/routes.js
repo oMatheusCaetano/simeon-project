@@ -14,4 +14,9 @@ export default [
     name: 'Login',
     component: () => import(/* webpackChunkName: "login-page" */ '@page/Login'),
   },
+  {
+    path: '/post',
+    name: 'Post',
+    component: () => import(/* webpackChunkName: "post-page" */ '@page/Post'),
+  },
 ]

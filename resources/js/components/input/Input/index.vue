@@ -1,11 +1,20 @@
 <template>
   <div class="input-component">
     <label :for="id">{{ label }}</label>
+    <textarea
+      v-bind="$attrs"
+      :id="id"
+      :value="modelValue"
+      @input="updateValue"
+      v-if="textarea"
+    ></textarea>
+
     <input
       v-bind="$attrs"
       :id="id"
       :value="modelValue"
       @input="updateValue"
+      v-else
     />
     <small>{{ errorMessage }}</small>
   </div>
@@ -18,6 +27,7 @@ export default {
     label: String,
     errorMessage: String,
     modelValue: String,
+    textarea: Boolean,
   },
 
   setup(_, context) {
@@ -42,7 +52,7 @@ export default {
     color: $label;
   }
 
-  input {
+  input, textarea {
     height: 56px;
     width: 100%;
     border: 1px solid $border;
@@ -51,6 +61,11 @@ export default {
     padding: 0 10px;
     outline: none;
     color: $text;
+  }
+
+  textarea {
+    padding: 10px;
+    max-width: 100%;
   }
 
   small {

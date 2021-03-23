@@ -3,5 +3,6 @@
     "/js/home-page.js": "/js/home-page.js",
     "/js/register-page.js": "/js/register-page.js",
     "/js/login-page.js": "/js/login-page.js",
+    "/js/post-page.js": "/js/post-page.js",
     "/css/main.css": "/css/main.css"
 }
