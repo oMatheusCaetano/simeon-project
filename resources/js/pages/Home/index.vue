@@ -109,6 +109,10 @@ export default {
       if (result) this.$router.push({ name: 'Login' })
     },
 
+    formatDate(date) {
+      return new Date(date)
+    },
+
     nextPage() {
       if (this.posts.current_page >= this.posts.last_page) return
       this.$store.dispatch('post/all', { page: this.posts.current_page + 1 })
