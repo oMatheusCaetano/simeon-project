@@ -29,11 +29,11 @@
             v-model="formData.password_confirmation"
             :errorMessage="errors.password_confirmation ? errors.password_confirmation[0] : ''"
         />
-        <Button text="Salvar Cadastro" />
+        <Button text="Salvar Cadastro" :loading="loading" />
         <hr />
         <div class="not-registered">
-          <router-link to="/">
-            <span>Ainda não possui uma conta?</span>
+          <router-link to="/login">
+            <span>Já está cadastrado?</span>
           </router-link>
         </div>
       </form>
@@ -58,12 +58,14 @@ export default {
   computed: {
     ...mapGetters({
       errors: 'auth/getErrors',
+      loading: 'getIsLoading',
     }),
   },
 
   methods: {
-    register() {
-      this.$store.dispatch('auth/register', this.formData)
+    async register() {
+      const result = this.$store.dispatch('auth/register', this.formData)
+      if (result) this.$router.push({ name: 'Home' })
     },
   },
 

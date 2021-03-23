@@ -4,6 +4,4 @@ const token = window.localStorage.getItem('api_token')
 
 export const headers = { headers: { Authorization: `Bearer ${token}` } }
 
-export default axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
-})
+export default axios.create({ baseURL: 'localhost:8000/api/' })

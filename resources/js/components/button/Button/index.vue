@@ -1,6 +1,8 @@
 <template>
   <div class="button-component">
-    <button v-bind="$attrs">{{ text }}</button>
+    <button v-bind="$attrs" :disabled="loading">
+      {{ loading ?  'Carregando...' : text }}
+    </button>
   </div>
 </template>
 
@@ -8,6 +10,7 @@
 export default {
   props: {
     text: String,
+    loading: Boolean,
   },
 }
 </script>

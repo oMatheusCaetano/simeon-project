@@ -3,12 +3,17 @@ import api from '@/services/api'
 export default {
   async register({ commit }, formData) {
     commit('resetErrors')
+
     try {
       commit('setIsLoading', true, { root: true })
-      await api.post('register', formData)
+      const data = await api.post('register', formData)
       commit('setIsLoading', false, { root: true })
+      // eslint-disable-next-line no-console
+      console.log(`data ${data}`)
       return true
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(`error ${err}`)
       commit('setErrors', err.response.data)
       commit('setIsLoading', false, { root: true })
       return false
