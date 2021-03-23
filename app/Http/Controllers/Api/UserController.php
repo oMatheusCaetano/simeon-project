@@ -13,6 +13,7 @@ class UserController extends Controller
 
   public function __construct(UserRepository $postRepository)
   {
+    $this->middleware('auth:api', ['except' => ['store']]);
     $this->repository = $postRepository;
   }
 

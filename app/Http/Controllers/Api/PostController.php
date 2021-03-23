@@ -13,6 +13,7 @@ class PostController extends Controller
 
   public function __construct(PostRepository $postRepository)
   {
+    $this->middleware('auth:api');
     $this->repository = $postRepository;
   }
 

@@ -13,6 +13,7 @@ class CommentController extends Controller
 
   public function __construct(CommentRepository $postRepository)
   {
+    $this->middleware('auth:api');
     $this->repository = $postRepository;
   }
 

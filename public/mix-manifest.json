@@ -2,5 +2,6 @@
     "/js/main.js": "/js/main.js",
     "/js/home-page.js": "/js/home-page.js",
     "/js/register-page.js": "/js/register-page.js",
+    "/js/login-page.js": "/js/login-page.js",
     "/css/main.css": "/css/main.css"
 }
